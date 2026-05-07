@@ -1,0 +1,46 @@
+#Requires -RunAsAdministrator
+<#
+    .DISCLAIMER
+
+    THE SCRIPT IS PROVIDED AS-IS, WITHOUT WARRANTY OF ANY KIND. USE AT YOUR OWN RISK.
+
+    By running this script, you acknowledge that you have read and understood the disclaimer, and you agree to assume
+    all responsibility for any failures, damages, or issues that may arise as a result of executing this script.
+
+    .DESCRIPTION
+    Restore DHCP Scopes and Leases, to the latest backup file found on the supplied Path
+
+
+    .PARAMETER Path 
+    Specifies where the backup file will be retrieved.
+    This can be a local path or a UNC path.
+    
+    .EXAMPLE
+    .\Restore-DHCP-Scopes.ps1 -BackupPath "\\FileServer\Backup\DHCP"
+
+#>
+
+[CmdletBinding()]
+Param(
+  [Parameter(ValueFromPipelineByPropertyName=$true,Position=0,mandatory=$true)]
+  [ValidatePattern("^\\\\\S+$")]
+  [string]$BackupPath
+)
+
+
+# Find latest backup file
+# ------------------------------------------------------------
+$LatestBackup = Get-ChildItem -Path $BackupPath | Sort-Object CreationTime -Descending | Select-Object -First 1
+if ($null -eq $LatestBackup) {
+    Throw "Unable to locate any DHCP backup files in the path provided"
+}
+
+
+# Restore the DHCP server
+# ------------------------------------------------------------
+Try {
+    Import-DhcpServer -Leases -File "$($LatestBackup.fullname)" -BackupPath "C:\Windows\Temp" -force
+} catch {
+    Write-Output "Unable to Restore the DHCP server"
+    Write-Output $_
+}

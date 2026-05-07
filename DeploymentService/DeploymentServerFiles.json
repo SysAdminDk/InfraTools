@@ -1,0 +1,234 @@
+[
+    {
+        "LocalPath":  "C:\\Scripts",
+        "RemotePath":  "InfraAsCode/contents/Platforms/PVE/Start-PVETools.ps1"
+    },
+    {
+        "LocalPath":  "C:\\Scripts\Tools",
+        "RemotePath":  "InfraAsCode/contents/Platforms/PVE/New-PVEVMTemplate.ps1"
+    },
+    {
+        "LocalPath":  "C:\\Scripts\Tools",
+        "RemotePath":  "InfraAsCode/contents/Platforms/PVE/Create-PVEVMs.ps1"
+    },
+    {
+        "LocalPath":  "C:\\Scripts\Tools",
+        "RemotePath":  "InfraAsCode/contents/Platforms/PVE/Balance-PVEVMs.ps1"
+    },
+    {
+        "LocalPath":  "C:\\Scripts\\Functions",
+        "RemotePath":  "InfraAsCode/contents/Modules/IP2Mac.ps1"
+    },
+    {
+        "LocalPath":  "C:\\Scripts\\Functions",
+        "RemotePath":  "InfraAsCode/contents/Modules/MAC2IP.ps1"
+    },
+    {
+        "LocalPath":  "C:\\Scripts\\Functions",
+        "RemotePath":  "InfraAsCode/contents/Modules/New-ISOFile.ps1"
+    },
+    {
+        "LocalPath":  "C:\\Scripts\\Functions",
+        "RemotePath":  "InfraAsCode/contents/Modules/New-Unattend.ps1"
+    },
+    {
+        "LocalPath":  "C:\\Scripts\\Tools",
+        "RemotePath":  "InfraAsCode/contents/ConfigFiles/Tools/BuildDefaultConfigFiles.ps1"
+    },
+    {
+        "LocalPath":  "C:\\Scripts\\Tools",
+        "RemotePath":  "InfraAsCode/contents/ConfigFiles/Tools/Create-VMDomain.ps1"
+    },
+    {
+        "LocalPath":  "C:\\Scripts\\Tools",
+        "RemotePath":  "InfraAsCode/contents/ConfigFiles/Tools/Add-VM2Domain.ps1"
+    },
+    {
+        "LocalPath":  "C:\\Scripts\\Functions",
+        "RemotePath":  "InfraAsCode/contents/Platforms/PVE/Functions/Get-PVELocation.ps1"
+    },
+    {
+        "LocalPath":  "C:\\Scripts\\Functions",
+        "RemotePath":  "InfraAsCode/contents/Platforms/PVE/Functions/Get-PVENextDiskID.ps1"
+    },
+    {
+        "LocalPath":  "C:\\Scripts\\Functions",
+        "RemotePath":  "InfraAsCode/contents/Platforms/PVE/Functions/Get-PVENextID.ps1"
+    },
+    {
+        "LocalPath":  "C:\\Scripts\\Functions",
+        "RemotePath":  "InfraAsCode/contents/Platforms/PVE/Functions/Get-PVEServerID.ps1"
+    },
+    {
+        "LocalPath":  "C:\\Scripts\\Functions",
+        "RemotePath":  "InfraAsCode/contents/Platforms/PVE/Functions/Get-PVETemplates.ps1"
+    },
+    {
+        "LocalPath":  "C:\\Scripts\\Functions",
+        "RemotePath":  "InfraAsCode/contents/Platforms/PVE/Functions/Move-PVEVM.ps1"
+    },
+    {
+        "LocalPath":  "C:\\Scripts\\Functions",
+        "RemotePath":  "InfraAsCode/contents/Platforms/PVE/Functions/New-PVEServer.ps1"
+    },
+    {
+        "LocalPath":  "C:\\Scripts\\Functions",
+        "RemotePath":  "InfraAsCode/contents/Platforms/PVE/Functions/PVE-Connect.ps1"
+    },
+    {
+        "LocalPath":  "C:\\Scripts\\Functions",
+        "RemotePath":  "InfraAsCode/contents/Platforms/PVE/Functions/Reassign-PVEOwner.ps1"
+    },
+    {
+        "LocalPath":  "C:\\Scripts\\Functions",
+        "RemotePath":  "InfraAsCode/contents/Platforms/PVE/Functions/Remove-PVEServer.ps1"
+    },
+    {
+        "LocalPath":  "C:\\Scripts\\Functions",
+        "RemotePath":  "InfraAsCode/contents/Platforms/PVE/Functions/Start-PVEWait.ps1"
+    },
+    {
+        "LocalPath":  "C:\\Scripts\\Functions",
+        "RemotePath":  "InfraAsCode/contents/Platforms/PVE/Functions/Upload-PVEISO.ps1"
+    },
+    {
+        "LocalPath":  "C:\\inetpub\\wwwroot\\Deployment\\BuildScripts\\Common",
+        "RemotePath":  "InfraAsCode/contents/BuildScripts/Common/BootStrap.ps1"
+    },
+    {
+        "LocalPath":  "C:\\inetpub\\wwwroot\\Deployment\\BuildScripts\\Common",
+        "RemotePath":  "InfraAsCode/contents/BuildScripts/Common/Cleanup.ps1"
+    },
+    {
+        "LocalPath":  "C:\\inetpub\\wwwroot\\Deployment\\BuildScripts\\Common",
+        "RemotePath":  "InfraAsCode/contents/BuildScripts/Common/FirstBoot.ps1"
+    },
+    {
+        "LocalPath":  "C:\\inetpub\\wwwroot\\Deployment\\BuildScripts\\Common",
+        "RemotePath":  "InfraAsCode/contents/BuildScripts/Common/ShowLoginInfo.ps1"
+    },
+    {
+        "LocalPath":  "C:\\inetpub\\wwwroot\\Deployment\\BuildScripts\\Custom\\Active Directory",
+        "RemotePath":  "InfraAsCode/contents/BuildScripts/Custom/Active Directory/ADDS-Cleanup.ps1"
+    },
+    {
+        "LocalPath":  "C:\\inetpub\\wwwroot\\Deployment\\BuildScripts\\Custom\\Active Directory",
+        "RemotePath":  "InfraAsCode/contents/BuildScripts/Custom/Active Directory/ADDS-Hardening.ps1"
+    },
+    {
+        "LocalPath":  "C:\\inetpub\\wwwroot\\Deployment\\BuildScripts\\Custom\\Active Directory",
+        "RemotePath":  "InfraAsCode/contents/BuildScripts/Custom/Active Directory/ADDS-InitialUsers.ps1"
+    },
+    {
+        "LocalPath":  "C:\\inetpub\\wwwroot\\Deployment\\BuildScripts\\Custom\\Active Directory",
+        "RemotePath":  "InfraAsCode/contents/BuildScripts/Custom/Active Directory/ADDS-Tiering.ps1"
+    },
+    {
+        "LocalPath":  "C:\\inetpub\\wwwroot\\Deployment\\BuildScripts\\Custom\\Active Directory",
+        "RemotePath":  "InfraAsCode/contents/BuildScripts/Custom/Active Directory/ADDS-WBackup.ps1"
+    },
+    {
+        "LocalPath":  "C:\\inetpub\\wwwroot\\Deployment\\BuildScripts\\Custom\\Azure ARC",
+        "RemotePath":  "InfraAsCode/contents/BuildScripts/Custom/Azure ARC/Create-ArcDeploymentGPO.ps1"
+    },
+    {
+        "LocalPath":  "C:\\inetpub\\wwwroot\\Deployment\\BuildScripts\\Custom\\Azure ARC",
+        "RemotePath":  "InfraAsCode/contents/BuildScripts/Custom/Azure ARC/Create-ArcHardeningGPO.ps1"
+    },
+    {
+        "LocalPath":  "C:\\inetpub\\wwwroot\\Deployment\\BuildScripts\\Custom\\Azure ARC",
+        "RemotePath":  "InfraAsCode/contents/BuildScripts/Custom/Azure ARC/Set-AzureArcSPSecret.ps1"
+    },
+    {
+        "LocalPath":  "C:\\inetpub\\wwwroot\\Deployment\\BuildScripts\\Services",
+        "RemotePath":  "InfraAsCode/contents/BuildScripts/Services/AADS-0x.ps1"
+    },
+    {
+        "LocalPath":  "C:\\inetpub\\wwwroot\\Deployment\\BuildScripts\\Services",
+        "RemotePath":  "InfraAsCode/contents/BuildScripts/Services/ADCA-01-temp.ps1"
+    },
+    {
+        "LocalPath":  "C:\\inetpub\\wwwroot\\Deployment\\BuildScripts\\Services",
+        "RemotePath":  "InfraAsCode/contents/BuildScripts/Services/ADCA-01.ps1"
+    },
+    {
+        "LocalPath":  "C:\\inetpub\\wwwroot\\Deployment\\BuildScripts\\Services",
+        "RemotePath":  "InfraAsCode/contents/BuildScripts/Services/ADDS-01.ps1"
+    },
+    {
+        "LocalPath":  "C:\\inetpub\\wwwroot\\Deployment\\BuildScripts\\Services",
+        "RemotePath":  "InfraAsCode/contents/BuildScripts/Services/ADDS-0x.ps1"
+    },
+    {
+        "LocalPath":  "C:\\inetpub\\wwwroot\\Deployment\\BuildScripts\\Services",
+        "RemotePath":  "InfraAsCode/contents/BuildScripts/Services/AMFA-0x.ps1"
+    },
+    {
+        "LocalPath":  "C:\\inetpub\\wwwroot\\Deployment\\BuildScripts\\Services",
+        "RemotePath":  "InfraAsCode/contents/BuildScripts/Services/DFSN&R.ps1"
+    },
+    {
+        "LocalPath":  "C:\\inetpub\\wwwroot\\Deployment\\BuildScripts\\Services",
+        "RemotePath":  "InfraAsCode/contents/BuildScripts/Services/DHCP-0x.ps1"
+    },
+    {
+        "LocalPath":  "C:\\inetpub\\wwwroot\\Deployment\\BuildScripts\\Services",
+        "RemotePath":  "InfraAsCode/contents/BuildScripts/Services/FILE-0x.ps1"
+    },
+    {
+        "LocalPath":  "C:\\inetpub\\wwwroot\\Deployment\\BuildScripts\\Services",
+        "RemotePath":  "InfraAsCode/contents/BuildScripts/Services/MGMT-0x.ps1"
+    },
+    {
+        "LocalPath":  "C:\\inetpub\\wwwroot\\Deployment\\BuildScripts\\Services",
+        "RemotePath":  "InfraAsCode/contents/BuildScripts/Services/NPAS-0x.ps1"
+    },
+    {
+        "LocalPath":  "C:\\inetpub\\wwwroot\\Deployment\\BuildScripts\\Services",
+        "RemotePath":  "InfraAsCode/contents/BuildScripts/Services/RDCB-0x.ps1"
+    },
+    {
+        "LocalPath":  "C:\\inetpub\\wwwroot\\Deployment\\BuildScripts\\Services",
+        "RemotePath":  "InfraAsCode/contents/BuildScripts/Services/RDDB-0x.ps1"
+    },
+    {
+        "LocalPath":  "C:\\inetpub\\wwwroot\\Deployment\\BuildScripts\\Services",
+        "RemotePath":  "InfraAsCode/contents/BuildScripts/Services/RDGW-0x.ps1"
+    },
+    {
+        "LocalPath":  "C:\\inetpub\\wwwroot\\Deployment\\BuildScripts\\Services",
+        "RemotePath":  "InfraAsCode/contents/BuildScripts/Services/RDGW-Shared.ps1"
+    },
+    {
+        "LocalPath":  "C:\\inetpub\\wwwroot\\Deployment\\BuildScripts\\Services",
+        "RemotePath":  "InfraAsCode/contents/BuildScripts/Services/RDGW-Split.ps1"
+    },
+    {
+        "LocalPath":  "C:\\inetpub\\wwwroot\\Deployment\\BuildScripts\\Services",
+        "RemotePath":  "InfraAsCode/contents/BuildScripts/Services/RDLI-0x.ps1"
+    },
+    {
+        "LocalPath":  "C:\\inetpub\\wwwroot\\Deployment\\BuildScripts\\Services",
+        "RemotePath":  "InfraAsCode/contents/BuildScripts/Services/RDP-LockDown.ps1"
+    },
+    {
+        "LocalPath":  "C:\\inetpub\\wwwroot\\Deployment\\BuildScripts\\Services",
+        "RemotePath":  "InfraAsCode/contents/BuildScripts/Services/WAC-01.ps1"
+    },
+    {
+        "LocalPath":  "C:\\inetpub\\wwwroot\\Deployment\\BuildScripts\\Services",
+        "RemotePath":  "InfraAsCode/contents/BuildScripts/Services/WEB-01.ps1"
+    },
+    {
+        "LocalPath":  "C:\\inetpub\\wwwroot\\Deployment\\ConfigFiles",
+        "RemotePath":  "InfraAsCode/contents/ConfigFiles/Initial-Groups.json"
+    },
+    {
+        "LocalPath":  "C:\\inetpub\\wwwroot\\Deployment\\ConfigFiles",
+        "RemotePath":  "InfraAsCode/contents/ConfigFiles/Initial-Users.json"
+    },
+    {
+        "LocalPath":  "C:\\inetpub\\wwwroot\\Deployment\\ConfigFiles",
+        "RemotePath":  "InfraAsCode/contents/ConfigFiles/MasterServerConfig.json"
+    }
+]
