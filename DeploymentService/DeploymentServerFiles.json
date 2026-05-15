@@ -8,11 +8,11 @@
         "RemotePath":  "InfraAsCode/contents/Platforms/PVE/New-PVEVMTemplate.ps1"
     },
     {
-        "LocalPath":  "C:\\Scripts\Tools",
+        "LocalPath":  "C:\\Scripts\\Tools",
         "RemotePath":  "InfraAsCode/contents/Platforms/PVE/Create-PVEVMs.ps1"
     },
     {
-        "LocalPath":  "C:\\Scripts\Tools",
+        "LocalPath":  "C:\\Scripts\\Tools",
         "RemotePath":  "InfraAsCode/contents/Platforms/PVE/Balance-PVEVMs.ps1"
     },
     {
@@ -126,6 +126,10 @@
     {
         "LocalPath":  "C:\\inetpub\\wwwroot\\Deployment\\BuildScripts\\Custom\\Active Directory",
         "RemotePath":  "InfraAsCode/contents/BuildScripts/Custom/Active Directory/ADDS-WBackup.ps1"
+    },
+    {
+        "LocalPath":  "C:\\inetpub\\wwwroot\\Deployment\\BuildScripts\\Custom\\Active Directory",
+        "RemotePath":  "InfraAsCode/contents/BuildScripts/Custom/Active Directory/ADDS-AutoPromo.ps1"
     },
     {
         "LocalPath":  "C:\\inetpub\\wwwroot\\Deployment\\BuildScripts\\Custom\\Azure ARC",
