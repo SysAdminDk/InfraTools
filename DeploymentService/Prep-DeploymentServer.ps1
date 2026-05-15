@@ -141,53 +141,6 @@ if (-NOT ($StaticContent.Collection.fileExtension.Contains(".ps1"))) {
 }
 
 
-# Import PVE modules
-# ------------------------------------------------------------
-Get-ChildItem -Path "$RootPath\Functions" | ForEach-Object { Import-Module -Name $_.FullName -Force }
-
-
-# Connect to PVE Cluster
-# ------------------------------------------------------------
-$PVEConnect = PVE-Connect -Authkey "$($PVESecret.User)!$($PVESecret.TokenID)=$($PVESecret.Token)" -Hostaddr $($PVESecret.Host)
-
-
-# Get VM Status
-# ------------------------------------------------------------
-$VMID        = (Invoke-RestMethod -Uri "$($PVEConnect.PVEAPI)/cluster/resources?type=vm" -Headers $PVEConnect.Headers).data | Where {$_.name -eq $($ENV:ComputerName)}
-$VMStatus    = (Invoke-RestMethod -Uri "$($PVEConnect.PVEAPI)/nodes/$($VMID.node)/qemu/$($VMID.VMID)/config" -Headers $PVEConnect.Headers).data
-
-
-# Remove all Media Drives
-# ------------------------------------------------------------
-$MediaDrives = $VMStatus.PSObject.Properties | Where {$_.value -like "*media=cdrom*"} # -and $_.Value -NotLike "*Server*"}
-
-if ($null -ne $MediaDrives) {
-
-    $body = ""
-    $MediaDrives | Foreach { $body += "delete=$($_.Name)&" }
-    $RemoveMedia = Invoke-RestMethod -Method POST -Uri "$($PVEConnect.PVEAPI)/nodes/$($VMID.node)/qemu/$($VMID.VMID)/config" -Headers $($PVEConnect.Headers) -Body $Body
-}
-
-
-# Enable HA (Autostart)
-# ------------------------------------------------------------
-$HAStatus = (Invoke-RestMethod -Uri "$($PVEConnect.PVEAPI)/cluster/ha/resources" -Headers $PVEConnect.Headers -Method Get).data
-if (-NOT ($HAStatus.data | Where { $_.SID -eq "vm:$($VMID.VMID)" } )) {
-    $Body = "sid=$($VMID.VMID)&failback=0&max_relocate=0&state=started"
-    $null = Invoke-RestMethod -Uri "$($PVEConnect.PVEAPI)/cluster/ha/resources" -Headers $PVEConnect.Headers -Method Post -Body $Body
-}
-
-
-
-# Add .... to autostart after reboot.
-<#
-1. GIT Sync script...
-
-2. Create template. (C:\Scripts\New-PVEVMTemplate.ps1)
-3. Create VM list.  (C:\Scripts\Tools\BuildConfigFiles.ps1)
-4. Create Servers.  (C:\Scripts\Create-PVEServers.ps1)
-#>
-
 # Create GIT Sync Script
 # ------------------------------------------------------------
 $SyncScript = @"
@@ -274,6 +227,53 @@ Expand-Archive -Path "`$RootPath\GIT-Cache\GIT-Cache.zip" -DestinationPath "`$Ro
 Remove-Item -Path "`$RootPath\GIT-Cache\" -Recurse -Force
 "@
 $SyncScript | Out-File "$RootPath\GIT-Sync.ps1" -Encoding utf8 -Force
+& "$RootPath\GIT-Sync.ps1"
+
+
+# Import PVE modules
+# ------------------------------------------------------------
+Get-ChildItem -Path "$RootPath\Functions" | ForEach-Object { Import-Module -Name $_.FullName -Force }
+
+
+# Connect to PVE Cluster
+# ------------------------------------------------------------
+$PVEConnect = PVE-Connect -Authkey "$($PVESecret.User)!$($PVESecret.TokenID)=$($PVESecret.Token)" -Hostaddr $($PVESecret.Host)
+
+
+# Get VM Status
+# ------------------------------------------------------------
+$VMID        = (Invoke-RestMethod -Uri "$($PVEConnect.PVEAPI)/cluster/resources?type=vm" -Headers $PVEConnect.Headers).data | Where {$_.name -eq $($ENV:ComputerName)}
+$VMStatus    = (Invoke-RestMethod -Uri "$($PVEConnect.PVEAPI)/nodes/$($VMID.node)/qemu/$($VMID.VMID)/config" -Headers $PVEConnect.Headers).data
+
+
+# Remove all Media Drives
+# ------------------------------------------------------------
+$MediaDrives = $VMStatus.PSObject.Properties | Where {$_.value -like "*media=cdrom*"} # -and $_.Value -NotLike "*Server*"}
+
+if ($null -ne $MediaDrives) {
+
+    $body = ""
+    $MediaDrives | Foreach { $body += "delete=$($_.Name)&" }
+    $RemoveMedia = Invoke-RestMethod -Method POST -Uri "$($PVEConnect.PVEAPI)/nodes/$($VMID.node)/qemu/$($VMID.VMID)/config" -Headers $($PVEConnect.Headers) -Body $Body
+}
+
+
+# Enable HA (Autostart)
+# ------------------------------------------------------------
+$HAStatus = (Invoke-RestMethod -Uri "$($PVEConnect.PVEAPI)/cluster/ha/resources" -Headers $PVEConnect.Headers -Method Get).data
+if (-NOT ($HAStatus.data | Where { $_.SID -eq "vm:$($VMID.VMID)" } )) {
+    $Body = "sid=$($VMID.VMID)&failback=0&max_relocate=0&state=started"
+    $null = Invoke-RestMethod -Uri "$($PVEConnect.PVEAPI)/cluster/ha/resources" -Headers $PVEConnect.Headers -Method Post -Body $Body
+}
+
+
+
+# Add .... to autostart after reboot.
+<#
+1. Create template. (C:\Scripts\New-PVEVMTemplate.ps1)
+2. Create VM list.  (C:\Scripts\Tools\BuildConfigFiles.ps1)
+3. Create Servers.  (C:\Scripts\Create-PVEServers.ps1)
+#>
 
 
 # Shutdown to activate Hardware changes.
