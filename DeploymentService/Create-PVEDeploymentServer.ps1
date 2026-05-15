@@ -540,6 +540,6 @@ $SendKey += "&vmid=$VMID"
 $SendKey += "&command=sendkey a"
 
 for ($i=0; $i -lt 5; $i++) {
-    Invoke-RestMethod -Method POST -Uri "$($PVEConnect.PVEAPI)/nodes/$($PVELocation.name)/qemu/$VMID/monitor" -Headers $($PVEConnect.Headers) -Body $SendKey
+    $null = Invoke-RestMethod -Method POST -Uri "$($PVEConnect.PVEAPI)/nodes/$($PVELocation.name)/qemu/$VMID/monitor" -Headers $($PVEConnect.Headers) -Body $SendKey
     Start-Sleep -Seconds 2
 }
