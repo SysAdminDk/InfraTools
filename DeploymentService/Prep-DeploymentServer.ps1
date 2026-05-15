@@ -27,22 +27,6 @@ $FileDialog = New-Object System.Windows.Forms.OpenFileDialog
 $FileDialog.Filter = "JSON files (*.json)|*.json"
 
 
-# Define the GIT connection information, If the Repo is private.
-# ------------------------------------------------------------
-if (-NOT (Test-Path -Path "$RootPath\GitHub-Connection.json")) {
-    $FileDialog.Title  = "Select GIThub secrets file"
-    if ($FileDialog.ShowDialog() -eq "OK") {
-        $GitConnection = Get-Content -Path $FileDialog.FileName | ConvertFrom-Json
-    }
-    else {
-        Write-Warning "No file selected"
-        Write-Host "Download and execute `"InfraAsCode/Secrets/Scripts/Create-GitHubConfig.ps1`" and rerun this script"
-    }
-} else {
-    $GitConnection = Get-Content -Path "$RootPath\GitHub-Connection.json" | Convertfrom-Json
-}
-
-
 # Define PVE connection
 # ------------------------------------------------------------
 if (-NOT (Test-Path -Path "$RootPath\Proxmox-Connection.json")) {
@@ -157,26 +141,6 @@ if (-NOT ($StaticContent.Collection.fileExtension.Contains(".ps1"))) {
 }
 
 
-# Git "Clone"
-# ------------------------------------------------------------
-Invoke-RestMethod -uri "$($GitConnection.Url)/InfraAsCode/zipball/main" -OutFile "$RootPath\GIT-Cache\GIT-Cache.zip"
-Expand-Archive -Path "$RootPath\GIT-Cache\GIT-Cache.zip" -DestinationPath "$RootPath\GIT-Cache" -Force
-
-
-$RequiredScripts | Foreach {
-    $Source = Get-ChildItem -Path "$RootPath\GIT-Cache" -Recurse -Filter $(Split-Path -Path $_.RemotePath -Leaf)
-    if (-NOT(Test-Path -Path $_.LocalPath)) {
-        Write-Host "New Folder $($_.LocalPath)"
-        New-Item -Path $_.LocalPath -ItemType Directory -Force | Out-Null
-    }
-    Write-Host "Move $($Source.FullName) to $($_.LocalPath)"
-    Move-Item -Path $Source.FullName -Destination $_.LocalPath -Force
-}
-
-# Cleanup Cache
-Remove-Item -Path "$RootPath\GIT-Cache" -Recurse -Force
-
-
 # Import PVE modules
 # ------------------------------------------------------------
 Get-ChildItem -Path "$RootPath\Functions" | ForEach-Object { Import-Module -Name $_.FullName -Force }
@@ -217,10 +181,99 @@ if (-NOT ($HAStatus.data | Where { $_.SID -eq "vm:$($VMID.VMID)" } )) {
 
 # Add .... to autostart after reboot.
 <#
-1. Create template. (C:\Scripts\New-PVEVMTemplate.ps1)
-2. Create VM list.  (C:\Scripts\Tools\BuildConfigFiles.ps1)
-3. Create Servers.  (C:\Scripts\Create-PVEServers.ps1)
+1. GIT Sync script...
+
+2. Create template. (C:\Scripts\New-PVEVMTemplate.ps1)
+3. Create VM list.  (C:\Scripts\Tools\BuildConfigFiles.ps1)
+4. Create Servers.  (C:\Scripts\Create-PVEServers.ps1)
 #>
+
+# Create GIT Sync Script
+# ------------------------------------------------------------
+$SyncScript = @"
+# Required for unsigned scripts & modules.
+# ------------------------------------------------------------
+Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force -Confirm:`$false
+
+
+# Path to PVE scripts and Functions.
+# ------------------------------------------------------------
+if (`$PSScriptRoot -and `$PSScriptRoot -ne "") {
+    `$RootPath = `$PSScriptRoot
+} else {
+    `$RootPath  = "C:\Scripts"
+}
+
+
+# Define the GIT connection information, If the Repo is private.
+# ------------------------------------------------------------
+if (-NOT (Test-Path -Path "`$RootPath\GitHub-Connection.json")) {
+    throw "Unable to locate GIT address"
+} else {
+    `$GitConnection = Get-Content -Path "`$RootPath\GitHub-Connection.json" | Convertfrom-Json
+}
+
+
+# Prepare Folders
+# ------------------------------------------------------------
+if (-NOT (Test-Path -Path "`$RootPath\GIT-Cache")) {
+    New-Item -Path "`$RootPath\GIT-Cache" -ItemType Directory | Out-Null
+}
+
+
+# Get Default Site configuration
+# ------------------------------------------------------------
+Import-Module WebAdministration -ErrorAction Stop
+
+`$DefaultSite  = Get-ChildItem "IIS:\Sites" | Select-Object -First 1
+`$SiteName     = `$DefaultSite.Name
+`$PhysicalPath = [Environment]::ExpandEnvironmentVariables(`$DefaultSite.physicalPath)
+
+if ([string]::IsNullOrWhiteSpace(`$PhysicalPath) -or (-not (Test-Path -Path `$PhysicalPath))) {
+    throw "Invalid IIS physical path: `$PhysicalPath"
+}
+
+
+# Create Virtual Directory
+# ------------------------------------------------------------
+`$WebLocation  = "Deployment"
+`$FileLocation = Join-Path -Path `$PhysicalPath -ChildPath `$Location
+
+if (-NOT (Test-Path "`$FileLocation")) {
+    throw "Unable to locate Web Directory"
+}
+
+
+# Get the Required Scripts list
+# ------------------------------------------------------------
+if (-NOT (Test-Path -Path "`$RootPath\DeploymentServerFiles.json")) {
+    Throw "Unable to locate File List."
+} else {
+    `$RequiredScripts = Get-Content -Path "`$RootPath\DeploymentServerFiles.json" | Convertfrom-Json
+}
+
+
+# GIT "Clone"
+# ------------------------------------------------------------
+Invoke-RestMethod -uri "`$(`$GitConnection.Url)/InfraAsCode/zipball/main" -OutFile "`$RootPath\GIT-Cache\GIT-Cache.zip"
+Expand-Archive -Path "`$RootPath\GIT-Cache\GIT-Cache.zip" -DestinationPath "`$RootPath\GIT-Cache" -Force
+
+`$RequiredScripts | Foreach {
+    `$Source = Get-ChildItem -Path "`$RootPath\GIT-Cache" -Recurse -Filter `$(Split-Path -Path `$(`$_.RemotePath) -Leaf)
+    if (-NOT(Test-Path -Path `$(`$_.LocalPath))) {
+        Write-Host "New Folder `$(`$_.LocalPath)"
+        New-Item -Path `$(`$_.LocalPath) -ItemType Directory -Force | Out-Null
+    }
+    <#
+    Write-Host "Move `$(`$Source.FullName) to `$(`$_.LocalPath)"
+    #>
+    Move-Item -Path `$Source.FullName -Destination `$(`$_.LocalPath) -Force
+}
+
+# Cleanup Cache
+Remove-Item -Path "`$RootPath\GIT-Cache\" -Recurse -Force
+"@
+$SyncScript | Out-File "$RootPath\GIT-Sync.ps1" -Encoding utf8 -Force
 
 
 # Shutdown to activate Hardware changes.
