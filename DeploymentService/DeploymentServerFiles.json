@@ -4,7 +4,7 @@
         "RemotePath":  "InfraAsCode/contents/Platforms/PVE/Start-PVETools.ps1"
     },
     {
-        "LocalPath":  "C:\\Scripts\Tools",
+        "LocalPath":  "C:\\Scripts\\Tools",
         "RemotePath":  "InfraAsCode/contents/Platforms/PVE/New-PVEVMTemplate.ps1"
     },
     {
